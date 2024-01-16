@@ -22,20 +22,17 @@ const batchSize = 30;
 let totalVotes = 300;
 let sequence = 0;
 
-const mesaNumber = 2;
 
-if (!mesaNumber) {
-  console.error('Numero de mesa es mandatorio');
-  process.exit(1);
-}
 
-async function run() {
+
+
+async function run(mesaNumber ) {
   console.log("starting run")
   const promises = Array.from({ length: totalVotes / batchSize }, (_, i) => {
     const votesBatch = Array.from({ length: batchSize }, () => ({
       ID: uuidv4(), // Generar un ObjectID único
       candidateName: getRandomCandidateID(),
-      mesaID: mesaNumber,
+      mesaID: mesaNumber||1,
     }));
     return sendVotes(votesBatch);
   });

@@ -27,6 +27,9 @@
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    input{
+        margin-bottom: 20px;
+    }
   }
 
   .buttons{
@@ -40,3 +43,19 @@
     color: black;
 
   }
+
+  .scrollable-container {
+    overflow-y: auto;
+    max-height: 400px; // Ajusta según sea necesario
+    div{
+        ul{
+            li{
+                font-size: 20px;
+                list-style-type: none;
+            }
+        }
+    }
+  }
+  
+  // Resto de tus estilos aquí
+  

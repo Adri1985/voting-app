@@ -9,6 +9,18 @@ const ResultContainer = () => {
   const [loading, setLoading] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [sending, setSending] = useState(false);
+  const [mesaNumber, setMesaNumber] = useState("");
+  const [byMesa, setByMesa] = useState(false);
+  const [resultsByMesa, setResultsByMesa] = useState([]);
+
+  const handleResultsByMesa = () => {
+    fetchDataByMesa();
+    setByMesa(true);
+  };
+
+  const handleTotalResults = ()=>{
+    setByMesa(false)
+  }
 
   const fetchData = async () => {
     try {
@@ -17,6 +29,18 @@ const ResultContainer = () => {
       );
       setResults(response.data.result);
       console.log(response.data.result);
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+    }
+  };
+
+  const fetchDataByMesa = async () => {
+    try {
+      const response = await axios.get(
+        "https://n3fzkyx0si.execute-api.us-east-2.amazonaws.com/test/resultsbymesa"
+      );
+      setResultsByMesa(response.data);
+      console.log("result by mesa", response.data);
     } catch (error) {
       console.error("Error al realizar la solicitud:", error);
     }
@@ -34,14 +58,16 @@ const ResultContainer = () => {
     }
     setLoading(false);
     setResults([]);
+    setByMesa(false)
     setElapsedTime(0); // Reiniciar el tiempo al hacer reset
   };
 
   const handleRunClick = async () => {
-    setSending(true)
-    await run();
-    fetchData(); 
-    setSending(false)
+    setSending(true);
+    await run(mesaNumber);
+    fetchData();
+    setSending(false);
+    setByMesa(false);
   };
 
   useEffect(() => {
@@ -66,25 +92,59 @@ const ResultContainer = () => {
   return (
     <div className="row">
       <h1>Votes Results</h1>
-      {results
-        .sort((a, b) => b.totalVotes - a.totalVotes)
-        .map((result, index) => (
-          <p
-            className={index === 0 && !loading ? "blink-text winner" : ""}
-            key={result.totalVotes}
-          >
-            {index + 1}. {result.candidateName} {result.totalVotes}
-          </p>
-        ))}
-      {!loading && <div className="block">
-        {results.length !=0 && <button className="buttons" onClick={reset}>
-          RESET VOTATION
-        </button>}
-        
-        <button className="buttons" onClick={handleRunClick}>
-          {sending? 'PROCESSING ...' : 'SEND RANDOM VOTES'}
-        </button>
-      </div>}
+      {!byMesa &&
+        results
+          .sort((a, b) => b.totalVotes - a.totalVotes)
+          .map((result, index) => (
+            <p
+              className={index === 0 && !loading ? "blink-text winner" : ""}
+              key={result.totalVotes}
+            >
+              {index + 1}. {result.candidateName} {result.totalVotes}
+            </p>
+          ))}
+      {byMesa && (
+        <div className="scrollable-container" >
+          {resultsByMesa.map((mesa) => (
+            <div key={mesa.mesaID}>
+              <p>{`Mesa ${mesa.mesaID}`}</p>
+              <ul>
+                {mesa.candidates.map((candidate) => (
+                  <li key={candidate.candidateName}>
+                    {`${candidate.candidateName}: ${candidate.totalVotes} votos`}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+      {!loading && (
+        <div className="block">
+          
+          <input
+            type="text"
+            placeholder="Enter mesa number"
+            value={mesaNumber}
+            onChange={(e) => setMesaNumber(e.target.value)}
+          />
+          <button className="buttons" onClick={handleRunClick}>
+            {sending ? "PROCESSING ..." : "SEND RANDOM VOTES"}
+          </button>
+          <button className="buttons" onClick={handleTotalResults}>
+            TOTAL RESULTS
+          </button>
+          <button className="buttons" onClick={handleResultsByMesa}>
+            RESULTS BY MESA
+          </button>
+          
+          {results.length !== 0 && (
+            <button className="buttons" onClick={reset}>
+              RESET VOTATION
+            </button>
+          )}
+        </div>
+      )}
       {loading && (
         <p className="blink-text">DATABASE IS BEING RESTORED, PLEASE WAIT</p>
       )}

@@ -74,9 +74,10 @@ const ResultContainer = () => {
           </p>
         ))}
       {!loading && <div className="block">
-        <button className="buttons" onClick={reset}>
+        {results.length !=0 && <button className="buttons" onClick={reset}>
           RESET VOTATION
-        </button>
+        </button>}
+        
         <button className="buttons" onClick={handleRunClick}>
           SEND RANDOM VOTES
         </button>

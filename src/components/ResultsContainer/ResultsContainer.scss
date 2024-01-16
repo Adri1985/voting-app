@@ -18,3 +18,22 @@
     color:gold;
     font-size: 25px;
   }
+  .block{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  .buttons{
+    width: 200px;
+    height: 30px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: rgb(234, 234, 240);
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+
+  }

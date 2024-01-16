@@ -19,7 +19,7 @@ async function sendVotes(votes) {
 }
 
 const batchSize = 30;
-let totalVotes = 400;
+let totalVotes = 300;
 let sequence = 0;
 
 const mesaNumber = 2;

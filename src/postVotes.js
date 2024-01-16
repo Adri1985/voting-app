@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const lambdaEndpoint = 'https://n3fzkyx0si.execute-api.us-east-2.amazonaws.com/test/vote';
 
 function getRandomCandidateID() {
-  const candidates = ['Adri', 'Nick', 'Caro', 'Lou'];
+  const candidates = ['Menem','Milei','Massa', 'Bulrich', 'Larreta','Bregman'];;
   const randomIndex = Math.floor(Math.random() * candidates.length);
   return candidates[randomIndex];
 }

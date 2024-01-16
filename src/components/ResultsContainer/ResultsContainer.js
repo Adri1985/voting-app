@@ -59,6 +59,7 @@ const ResultContainer = () => {
     setLoading(false);
     setResults([]);
     setByMesa(false)
+    setResultsByMesa([])
     setElapsedTime(0); // Reiniciar el tiempo al hacer reset
   };
 
@@ -91,6 +92,7 @@ const ResultContainer = () => {
 
   return (
     <div className="row">
+      <div className = "scrollable-container">
       <h1>Votes Results</h1>
       {!byMesa &&
         results
@@ -119,15 +121,18 @@ const ResultContainer = () => {
           ))}
         </div>
       )}
+      </div>
+      
       {!loading && (
         <div className="block">
           
-          <input
-            type="text"
-            placeholder="Enter mesa number"
-            value={mesaNumber}
-            onChange={(e) => setMesaNumber(e.target.value)}
-          />
+            <input
+                type="text"
+                placeholder="Enter mesa number"
+                value={mesaNumber}
+                onChange={(e) => setMesaNumber(e.target.value)}
+            />
+            
           <button className="buttons" onClick={handleRunClick}>
             {sending ? "PROCESSING ..." : "SEND RANDOM VOTES"}
           </button>

@@ -19,7 +19,7 @@
 
   .winner{
     color:gold;
-    font-size: 50px;
+    font-size: 30px;
   }
   .block{
     display:flex;
@@ -31,7 +31,16 @@
         margin-bottom: 20px;
     }
   }
-
+  .mesa-input-container {
+    display: flex;
+    align-items: center; // Alinear verticalmente los elementos
+    margin-bottom: 10px; // Ajusta según sea necesario
+  
+    p {
+      margin-right: 10px; // Espacio entre el texto y el input
+    }
+  }
+  
   .buttons{
     width: 200px;
     height: 30px;
@@ -47,6 +56,9 @@
   .scrollable-container {
     overflow-y: auto;
     max-height: 400px; // Ajusta según sea necesario
+    p{
+        font-size: 20px;
+    }
     div{
         ul{
             li{

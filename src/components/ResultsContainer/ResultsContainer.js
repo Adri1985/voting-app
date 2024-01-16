@@ -8,6 +8,7 @@ const ResultContainer = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [sending, setSending] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -37,8 +38,10 @@ const ResultContainer = () => {
   };
 
   const handleRunClick = async () => {
+    setSending(true)
     await run();
-    fetchData(); // Después de ejecutar run, volver a obtener los resultados
+    fetchData(); 
+    setSending(false)
   };
 
   useEffect(() => {
@@ -79,7 +82,7 @@ const ResultContainer = () => {
         </button>}
         
         <button className="buttons" onClick={handleRunClick}>
-          SEND RANDOM VOTES
+          {sending? 'PROCESSING ...' : 'SEND RANDOM VOTES'}
         </button>
       </div>}
       {loading && (
